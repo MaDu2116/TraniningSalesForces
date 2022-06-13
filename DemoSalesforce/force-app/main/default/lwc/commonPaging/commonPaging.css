@@ -1,0 +1,21 @@
+.paging-box {
+    border: none;
+    margin: 10px 0px;
+}
+.paging-item {
+    display: inline-block;
+    margin: 0px 15px;
+}
+.unactive-item {
+    text-decoration: none;
+    color: #9c9595;
+    cursor: default;
+}
+.number-item {
+    color: red;
+}
+.select-page-size {
+    display: inline-block;
+    float: right;
+    margin-right: 10px;
+}

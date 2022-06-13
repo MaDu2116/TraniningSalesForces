@@ -1,0 +1,21 @@
+<template>
+    <div class="slds-grid slds-wrap paging-box slds-m-top_medium">
+        <div class="slds-col slds-size_8-of-12 slds-align_absolute-center">
+            <a class={getPreviousCssClass} onclick={previousHandler}>Previous</a> 
+            <span class="paging-item number-item slds-m-horizontal_large">Page <span>{currentPage}</span>/<span>{getTotalPage}</span></span>
+            <a class={getNextCssClass} onclick={nextHandler}>Next</a>
+        </div>
+        <div class="slds-col slds-size_2-of-12 slds-align_absolute-center">
+            <b>Total Records: {totalRecord}</b>
+        </div>
+        <div class="slds-col slds-size_2-of-12">
+            <div class="slds-select_container select-page-size">
+                <select class="slds-select" onchange={changeItemPerPageHandler}>
+                    <template for:each={optionItemPerPage} for:item="option">
+                        <option key={option} value={option}>Show {option} Item Per Page</option>
+                    </template>
+                </select>
+            </div>
+        </div>
+    </div>
+</template>

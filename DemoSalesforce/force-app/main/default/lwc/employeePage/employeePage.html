@@ -1,0 +1,14 @@
+<template>
+    <div class="slds-grid slds-template__container" style="background-color: white; padding: 20px 10px;">
+        <div class="slds-col slds-size_2-of-3">
+            <c-employee-list-cmp onopenmodalupsertemployee={openModalEditEmployee}
+                 ongetdetail={handleShowDetailEmployee} ></c-employee-list-cmp>
+        </div>
+        <div class="slds-col slds-size_1-of-3 slds-p-left_large" >
+            <c-employee-detail-cmp employee={dataDetail.employee} ></c-employee-detail-cmp>
+        </div>
+    </div>
+    <c-employee-edit-cmp if:true={dataEdit.isShow} oncloseeditemployee={closeModalEditEmployee} onsavedemployee={savedEmployee}
+        employee={dataEdit.employee} checked={dataEdit.checked} onsaveemptolist={savedEmpTolist}> 
+    </c-employee-edit-cmp>
+</template>

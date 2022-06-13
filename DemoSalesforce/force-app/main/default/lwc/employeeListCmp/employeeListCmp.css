@@ -1,0 +1,17 @@
+.icon-searching {
+    position: relative;
+    margin-left: 27px;
+}
+
+.hidden-loading {
+    display: none;
+}
+
+.icon-refreshing {
+    position: relative;
+    margin-right: 15px;
+    float: right;
+    height: 10px;
+    width: 10px;
+    margin-top: 11px;
+}

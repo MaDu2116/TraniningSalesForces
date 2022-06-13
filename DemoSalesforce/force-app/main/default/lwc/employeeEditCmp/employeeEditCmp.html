@@ -1,0 +1,76 @@
+<template>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+        aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header">
+                <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">
+                    <b if:true={isAdd}>Employee Add</b>
+                    <b if:false={isAdd}>Employee Edit</b>
+                </h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <div class="slds-form slds-form_compound">
+                    <div class="slds-form-element__row">
+                        <div class={classInputAvatarWrapper}>
+                            <label class="slds-form-element__label">Avatar</label>
+                            <input type="file" onchange={changeFieldInputHandler}><br>
+                            <img class="size-avatar" src={employee.SrcAvatar__c} height="50" width="50" alt="Image preview...">
+                            <div class="slds-form-element__help" if:true={validator.avatar.isError}>
+                                {validator.avatar.errMsg}</div>
+                        </div>
+                    </div>
+                    <div class="slds-form-element__row">
+                        <div class={classInputNameWrapper}>
+                            <label class="slds-form-element__label">Name<abbr class="slds-required"
+                                    title="required">*</abbr></label>
+                            <input type="text" id="txt-name" data-field-name="Name" class="slds-input"
+                                value={employee.Name} onchange={changeFieldInputHandler} />
+                            <div class="slds-form-element__help" if:true={validator.name.isError}>
+                                {validator.name.errMsg}</div>
+                        </div>
+                        <div class={classInputEmailWrapper}>
+                            <label class="slds-form-element__label">Email<abbr class="slds-required"
+                                    title="required">*</abbr></label>
+                            <input type="text" id="txt-email" data-field-name="Email__c" class="slds-input"
+                                value={employee.Email__c} onchange={changeFieldInputHandler} />
+                            <div class="slds-form-element__help" if:true={validator.email.isError}>
+                                {validator.email.errMsg}</div>
+                        </div>
+                    </div>
+                    <div class="slds-form-element__row">
+                        <div class="slds-form-element slds-size_1-of-2 ">
+                            <label class="slds-form-element__label">Phone</label>
+                            <input type="text" id="txt-phone" data-field-name="Phone__c" class="slds-input"
+                                value={employee.Phone__c} onchange={changeFieldInputHandler} />
+                        </div>
+                        <div class={classInputBirthDayWrapper}>
+                            <label class="slds-form-element__label">BirthDay<abbr class="slds-required"
+                                    title="required">*</abbr></label>
+                            <lightning-input type="date" name="input1" data-field-name="Birthday__c"
+                                variant="label-hidden" value={employee.Birthday__c} onchange={changeFieldInputHandler}>
+
+                            </lightning-input>
+                            <div class="slds-form-element__help" if:true={validator.birthday.isError}>
+                                {validator.birthday.errMsg}</div>
+                        </div>
+                    </div>
+                    <div class="slds-form-element__row">
+                        <div class="slds-form-element slds-size_1-of-1">
+                            <label class="slds-form-element__label">Memo</label>
+                            <textarea id="txt-memo" class="slds-textarea" data-field-name="Memo__c"
+                                onchange={changeFieldInputHandler}>
+                                    {employee.Memo__c}
+                                </textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" onclick={closeModalHandler}>Cancel</button>
+                <button if:false={isSaving} class="slds-button slds-button_brand" onclick={saveEmployee}>Save</button>
+                <button if:true={isSaving} class="slds-button slds-button_brand unactive-btn">Save</button>
+            </footer>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</template>

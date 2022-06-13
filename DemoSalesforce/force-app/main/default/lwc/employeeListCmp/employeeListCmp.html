@@ -1,0 +1,138 @@
+<template>
+    <div class="slds-text-heading_large slds-m-bottom_medium">
+        <b>Employee List</b>
+    </div>
+    <div class="slds-form slds-box slds-m-bottom_medium" role="list">
+        <div class="slds-m-bottom_medium"><b class="slds-text-heading_medium">Search Form</b></div>
+        <div class="slds-form__row">
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                    <label class="slds-form-element__label slds-text-heading_small"
+                        for="single-form-element-id-02">Name</label>
+                    <div class="slds-form-element__control">
+                        <input type="text" id="single-form-element-id-02" class="slds-input" data-search-name="name"
+                            onchange={handleChangeSearchInput} />
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                    <label class="slds-form-element__label slds-text-heading_small"
+                        for="single-form-element-id-03">Phone</label>
+                    <div class="slds-form-element__control">
+                        <input type="text" id="single-form-element-id-03" class="slds-input" data-search-name="phone"
+                            onchange={handleChangeSearchInput} />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-form__row">
+            <div class="slds-form__item" role="listitem">
+                <div
+                    class="slds-form-element slds-form-element_horizontal slds-is-editing slds-form-element_1-col slds-m-bottom_none slds-m-top_medium">
+                    <button class="slds-button slds-button_brand" onclick={handleSearchEmployees} >Search</button>
+                    <span class={getVisibilityIconSearching}>
+                        <div class="slds-spinner_container">
+                            <div role="status" class="slds-spinner slds-spinner_small slds-spinner_brand">
+                                <span class="slds-assistive-text">Loading</span>
+                                <div class="slds-spinner__dot-a"></div>
+                                <div class="slds-spinner__dot-b"></div>
+                            </div>
+                        </div>
+                    </span>
+                    <button class="slds-button slds-button_brand slds-float_right"
+                        onclick={handleOpenModalUpsertEmployee}>Add Employee</button>
+                    <button class="slds-button slds-button_brand slds-float_right slds-m-right_medium" onclick={handleRefreshPage}>Refresh Page</button>
+                    <span if:true={isRefreshing} class="icon-refreshing">
+                        <div class="slds-spinner_container">
+                            <div role="status" class="slds-spinner slds-spinner_small slds-spinner_brand">
+                                <span class="slds-assistive-text">Loading</span>
+                                <div class="slds-spinner__dot-a"></div>
+                                <div class="slds-spinner__dot-b"></div>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div if:true={isSearchingOverLimit} class="slds-text-heading_small slds-text-color_error">
+        Maximum can show 2000 records, please search to filter less.
+    </div>
+<div if:false={getIsShowNotHasRecord} class="slds-box slds-p-around_none"> 
+    <div style="max-height: 500px; overflow-y: auto;" class="slds-border_bottom">
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+            <thead>
+                <tr class="slds-line-height_reset" style="height: 35px;">
+                    <th scope="col" style="width:2.25rem">
+                        <div class="slds-truncate" title="No">No</div>
+                    </th>
+                    <th scope="col" style="width:2.25rem">
+                        <div class="slds-truncate" title="SelectedItem"></div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Name">Avatar</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Name">Name</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Email">Email</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Phone">Phone</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="BirthDay">BirthDay</div>
+                    </th>
+                    <th scope="col" style="width: 6rem;">
+                        <div class="slds-truncate" title="Action">Action</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={displayingEmployees} for:item="employee">
+                    <tr class="slds-hint-parent" key={employee.Id}>
+                        <th data-label="No">
+                            <div class="slds-truncate">{employee.No}</div>
+                        </th>
+                        <th data-label="SelectedItem">
+                            <input if:true={employee.isSelected} data-id={employee.Id} data-no={employee.No} data-checked='checked'
+                                type="radio" name="selected-emp" checked onchange={handleSelectedDetail} />
+                            <input if:false={employee.isSelected} data-id={employee.Id} data-no={employee.No} data-checked='unchecked'
+                                type="radio" name="selected-emp" onchange={handleSelectedDetail} />
+                        </th>
+                        <td data-label="Avatar">
+                            <img src={employee.SrcAvatar__c} height="30" width="30" alt="Image preview...">
+                        </td>
+                        <td data-label="Name">
+                            <div class="slds-truncate">{employee.Name}</div>
+                        </td>
+                        <td data-label="Email">
+                            <div class="slds-truncate">{employee.Email__c}</div>
+                        </td>
+                        <td data-label="Phone">
+                            <div class="slds-truncate">{employee.Phone__c}</div>
+                        </td>
+                        <td data-label="BirthDay">
+                            <div class="slds-truncate">{employee.Birthday__c}</div>
+                        </td>
+                        <td data-label="Action">
+                            <div class="slds-truncate">
+                                <a data-id={employee.Id} onclick={handleOpenModalUpsertEmployee}>Edit</a>
+                                <span> / </span>
+                                <a data-id={employee.Id} data-name={employee.Name}
+                                    onclick={handleDeleteEmployee}>Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+    <c-common-paging total-record={getTotalRecord} item-per-page={itemPerPage} onpaging={handlePagingEvent}
+        current-page={currentPage}></c-common-paging>
+</div>
+<div if:true={getIsShowNotHasRecord} class="slds-text-heading_medium slds-text-color_error">No record</div>
+
+</template>

@@ -1,0 +1,5 @@
+.unactive-btn {
+    background-color: gray;
+    border-color: gray;
+    cursor: default;
+}

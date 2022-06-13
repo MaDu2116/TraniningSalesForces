@@ -1,0 +1,58 @@
+<template>
+    <div class="slds-text-heading_large slds-m-bottom_medium"><b>Employee Detail</b></div>
+    <div class="slds-form" if:true={isHasRecord}>
+        <div class="slds-form-element slds-form-element_horizontal">
+            <label class="slds-form-element__label" for="horizontal-input-id-01">Selected No</label>
+            <div class="slds-form-element__control">
+                <p>{employee.No}</p>
+            </div>
+        </div>
+        <div class="slds-form-element slds-form-element_horizontal">
+            <label class="slds-form-element__label" for="horizontal-input-id-01">Avatar</label>
+            <div class="slds-form-element__control">
+                <img src={employee.SrcAvatar__c} height="60" width="60" alt="Image preview...">
+            </div>
+        </div>
+        <div class="slds-form-element slds-form-element_horizontal">
+            <label class="slds-form-element__label" for="horizontal-input-id-01">Name</label>
+            <div class="slds-form-element__control">
+                <p>{employee.Name}</p>
+            </div>
+        </div>
+        <div class="slds-form-element slds-form-element_horizontal">
+            <label class="slds-form-element__label" for="horizontal-input-id-02">Email</label>
+            <div class="slds-form-element__control">
+                <p>{employee.Email__c}</p>
+            </div>
+        </div>
+        <div class="slds-form-element slds-form-element_horizontal">
+            <label class="slds-form-element__label" for="horizontal-input-id-03">Phone</label>
+            <div class="slds-form-element__control">
+                <p>{employee.Phone__c}</p>
+            </div>
+        </div>
+        <div class="slds-form-element slds-form-element_horizontal">
+            <label class="slds-form-element__label" for="horizontal-input-id-04">BirthDay</label>
+            <div class="slds-form-element__control">
+                <p>{employee.Birthday__c}</p>
+            </div>
+        </div>
+        <div class="slds-form-element slds-form-element_horizontal">
+            <label class="slds-form-element__label" for="horizontal-input-id-05">Memo</label>
+            <div class="slds-form-element__control">
+                <textarea id="textarea-id-01" class="slds-textarea" readonly>{employee.Memo__c}</textarea>
+            </div>
+        </div>
+    </div>
+    <div class="slds-form" if:false={isHasRecord}>
+        <div class="slds-form-element slds-form-element_horizontal">
+            <label class="slds-form-element__label" for="horizontal-input-id-01">Selected No</label>
+            <div class="slds-form-element__control">
+                <p>No record is selected</p>
+            </div>
+        </div>
+    </div>
+    <div class="slds-form-element__control">
+        <p></p>
+    </div>
+</template>
